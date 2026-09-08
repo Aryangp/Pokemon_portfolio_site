@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+@theme {
+  --font-pixel: var(--font-press-start), monospace;
+  --font-dialogue: var(--font-vt323), monospace;
+  --font-sans: var(--font-inter), sans-serif;
+
+  --color-floor: #E6EDE8;
+  --color-wall: #CBD5D0;
+  --color-ink: #1A202C;
+  --color-emerald-action: #10B981;
+  --color-emerald-hover: #059669;
+  --color-cyan-beam: #06B6D4;
+}
+
+:root {
+  --background-floor: #E6EDE8;
+  --background-wall: #CBD5D0;
+  --ink-color: #1A202C;
+  --action-emerald: #10B981;
+  --action-emerald-hover: #059669;
+  --accent-beam: #06B6D4;
+}
+
+/* Custom retro utility classes */
+.font-pixel {
+  font-family: var(--font-press-start), monospace;
+}
+
+.font-dialogue {
+  font-family: var(--font-vt323), monospace;
+}
+
+/* Retro Ink Borders & Shadows */
+.border-ink {
+  border: 3px solid #1A202C;
+}
+
+.border-ink-4 {
+  border: 4px solid #1A202C;
+}
+
+.shadow-retro {
+  box-shadow: 6px 6px 0px #1A202C;
+}
+
+.shadow-retro-sm {
+  box-shadow: 3px 3px 0px #1A202C;
+}
+
+.shadow-retro-lg {
+  box-shadow: 8px 8px 0px #1A202C;
+}
+
+.shadow-retro-emerald {
+  box-shadow: 4px 4px 0px #065F46;
+}
+
+/* Retro Button Press Effect */
+.btn-retro {
+  transition: all 0.08s ease-in-out;
+  box-shadow: 4px 4px 0px #1A202C;
+}
+
+.btn-retro:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px #1A202C;
+}
+
+.btn-retro:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px #1A202C;
+}
+
+/* Floor Grid Pattern (Retro Sage Perspective) */
+.floor-grid {
+  background-color: #E6EDE8;
+  background-image: 
+    linear-gradient(to right, rgba(26, 32, 44, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 32, 44, 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Authentic GBA Lab Wall */
+.lab-wall {
+  background-color: #CBD5D0;
+  background-image: linear-gradient(to bottom, #B4C4BD 0%, #CBD5D0 100%);
+}
+
+/* Authentic GBA Wooden Parquet Floor (Screenshot 1 Match) */
+.parquet-floor {
+  background-color: #EDE8D0;
+  background-image: 
+    linear-gradient(45deg, #E2DCB9 25%, transparent 25%), 
+    linear-gradient(-45deg, #E2DCB9 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, #E2DCB9 75%), 
+    linear-gradient(-45deg, transparent 75%, #E2DCB9 75%);
+  background-size: 32px 32px;
+  background-position: 0 0, 0 16px, 16px -16px, -16px 0px;
+}
+
+/* Blueprint Grid (PC Box & Trainer Card) */
+.blueprint-grid {
+  background-color: #2563EB;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Glowing Emerald Resume Download Button (Screenshot 1 Match) */
+.btn-emerald-glow {
+  background-color: #A7F3D0;
+  color: #064E3B;
+  border: 3px solid #047857;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.65), 3px 3px 0px #064E3B;
+}
+
+.btn-emerald-glow:hover {
+  background-color: #6EE7B7;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.95), 3px 3px 0px #064E3B;
+  transform: translate(-1px, -1px);
+}
+
+.btn-emerald-glow:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #064E3B;
+}
+
+/* Classic Pokémon Dialogue Window Border */
+.border-dialogue-black {
+  border: 3px solid #FFFFFF;
+  outline: 3px solid #1A202C;
+  box-shadow: 5px 5px 0px #1A202C;
+}
+
+/* GBA Borders & Shadows */
+.border-gba {
+  border: 4px solid #1A202C;
+}
+
+.border-gba-sm {
+  border: 3px solid #1A202C;
+}
+
+.shadow-gba {
+  box-shadow: 4px 4px 0px #1A202C;
+}
+
+.shadow-gba-lg {
+  box-shadow: 8px 8px 0px #1A202C;
+}
+
+/* Wall Brick/Tile Pattern */
+.wall-pattern {
+  background-color: #CBD5D0;
+  background-image: 
+    linear-gradient(to right, rgba(26, 32, 44, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 32, 44, 0.08) 2px, transparent 2px);
+  background-size: 64px 32px;
+}
+
+/* Cyan Glowing Beam Effect */
+@keyframes beamPulse {
+  0%, 100% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.9));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(6, 182, 212, 1));
+  }
+}
+
+.cyan-beam-active {
+  animation: beamPulse 1.2s infinite ease-in-out;
+}
+
+/* Pokéball Wobble Animation */
+@keyframes pokeWobble {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-25deg); }
+  40% { transform: rotate(20deg); }
+  60% { transform: rotate(-12deg); }
+  80% { transform: rotate(6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-poke-wobble {
+  animation: pokeWobble 0.9s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  transform-origin: bottom center;
+}
+
+/* Retro CRT Scanlines */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Pixel scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #CBD5D0;
+  border-left: 2px solid #1A202C;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #10B981;
+  border: 2px solid #1A202C;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
