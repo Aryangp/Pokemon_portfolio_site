@@ -41,7 +41,7 @@ export const PokeBallLoader: React.FC<PokeBallLoaderProps> = ({ onLoaded }) => {
       const catchTimer = setTimeout(() => {
         setStage('caught');
         sound.playGotcha();
-        setStatusText('★ GOTCHA! WELCOME TO OAK\'S LAB ★');
+        setStatusText("★ GOTCHA! WELCOME TO PROF. ARYAN'S LAB ★");
       }, 500);
 
       const finishTimer = setTimeout(() => {

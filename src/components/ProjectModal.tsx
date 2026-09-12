@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Sparkles, Activity, ShieldCheck, Zap } from 'lucide-react';
+import { X, ExternalLink, Sparkles, Activity, ShieldCheck, Zap, Layers } from 'lucide-react';
 import { StarterProject } from '@/data/portfolioData';
 import { PokeBallSprite } from './PokeBallSprite';
 import { sound } from '@/lib/soundEffects';
@@ -116,7 +117,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           </div>
 
           {/* Main Pokédex Content */}
-          <div className="p-4 md:p-6 flex flex-col gap-6">
+          <div className="p-4 md:p-6 flex flex-col gap-5">
             
             {/* Top Identity Row */}
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white border-ink p-4 shadow-retro-sm">
@@ -148,6 +149,33 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 </p>
               </div>
             </div>
+
+            {/* Project Cover / Visual Preview CRT Screen */}
+            {project.coverImage && (
+              <div className="bg-[#1A202C] border-ink p-2 shadow-retro-sm flex flex-col gap-1.5">
+                <div className="flex items-center justify-between px-1 text-[8px] font-pixel text-gray-300">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    CRT_PREVIEW_FEED.SYS
+                  </span>
+                  <span className="text-amber-400">STATUS: VERIFIED</span>
+                </div>
+                
+                <div className="relative w-full h-44 sm:h-52 bg-black border border-gray-600 overflow-hidden flex items-center justify-center">
+                  <Image
+                    src={project.coverImage}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 640px"
+                    className="object-cover object-center"
+                    unoptimized
+                  />
+                  {/* CRT Scanline & Glass reflection overlay */}
+                  <div className="absolute inset-0 scanlines opacity-25 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-white/10 pointer-events-none" />
+                </div>
+              </div>
+            )}
 
             {/* Technical Summary */}
             <div className="bg-white border-ink p-4 shadow-retro-sm">

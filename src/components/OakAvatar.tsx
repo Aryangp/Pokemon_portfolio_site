@@ -21,7 +21,7 @@ export const OakAvatar: React.FC<OakAvatarProps> = ({
     >
       <Image
         src="/images/professor_oak_avatar.png"
-        alt="Professor Oak"
+        alt="Professor Aryan"
         width={size * 2}
         height={size * 2}
         className="w-full h-full object-cover object-top scale-110 drop-shadow-sm transition-transform duration-200 hover:scale-125"

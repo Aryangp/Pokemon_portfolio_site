@@ -20,7 +20,7 @@ export const GbaWindowHeader: React.FC<GbaWindowHeaderProps> = ({
   onToggleSound,
 }) => {
   const tabs: Array<{ id: ViewTab; label: string; icon: string }> = [
-    { id: 'lab', label: "OAK'S LAB", icon: '🔴' },
+    { id: 'lab', label: "PROF. ARYAN'S LAB", icon: '🔴' },
     { id: 'pcbox', label: 'PC BOX & STATS', icon: '💻' },
     { id: 'trainercard', label: 'TRAINER CARD', icon: '⭐' },
     { id: 'party', label: 'ACTIVE PARTY', icon: '🍃' },

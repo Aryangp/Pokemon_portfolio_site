@@ -94,7 +94,7 @@ export const OakLabScene: React.FC<OakLabSceneProps> = ({
             <div className="w-28 h-36 md:w-32 md:h-40 relative drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]">
               <Image
                 src="/images/professor_oak_bust.png"
-                alt="Professor Oak"
+                alt="Professor Aryan"
                 fill
                 className="object-contain object-bottom transition-transform duration-200 group-hover:scale-105"
                 priority
@@ -126,7 +126,7 @@ export const OakLabScene: React.FC<OakLabSceneProps> = ({
                 <div className="w-3.5 h-2.5 bg-gray-300 border border-black rounded-xs" />
               </div>
               <div className="text-[7px] font-pixel text-[#FEF3C7] tracking-widest uppercase">
-                PROF. OAK PC
+                PROF. ARYAN PC
               </div>
             </div>
 

@@ -29,10 +29,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "TRAINER.DEV | Pokémon Developer Portfolio",
-  description: "A retro Pokémon-themed developer portfolio set in Professor Oak's Research Lab. Explore starter projects, inspect Bill's PC box, and battle-ready web apps.",
-  keywords: ["Developer Portfolio", "Pokemon Theme", "Retro Web Design", "Next.js", "Pixel Art", "Full Stack Developer"],
-  authors: [{ name: "Trainer.dev" }],
+  title: "PROF. ARYAN LABS | Pokémon Developer Portfolio",
+  description: "A retro Pokémon-themed developer portfolio set in Professor Aryan's Research Lab. Explore starter projects, inspect Bill's PC box, and battle-ready web apps.",
+  keywords: ["Aryan Gupta", "Developer Portfolio", "Pokemon Theme", "Prof Aryan Labs", "Retro Web Design", "Next.js", "Pixel Art", "Full Stack Developer"],
+  authors: [{ name: "Prof. Aryan Gupta" }],
 };
 
 export default function RootLayout({

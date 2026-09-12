@@ -25,7 +25,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   if (!isOpen) return null;
 
   const menuItems: Array<{ id: 'lab' | 'pcbox' | 'badges' | 'party' | 'pokenav'; label: string; desc: string }> = [
-    { id: 'lab', label: '1. OAK\'S LAB', desc: 'Starter Machine & Overview' },
+    { id: 'lab', label: "1. PROF. ARYAN'S LAB", desc: 'Starter Machine & Overview' },
     { id: 'pcbox', label: '2. BILL\'S PC [EXE]', desc: 'Project Storage Boxes' },
     { id: 'badges', label: '3. GYM BADGES', desc: '8/8 Technical Badges' },
     { id: 'party', label: '4. BATTLE PARTY', desc: 'Active Tech Stack' },

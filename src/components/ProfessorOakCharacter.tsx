@@ -53,7 +53,7 @@ export const ProfessorOakCharacter: React.FC<ProfessorOakCharacterProps> = ({
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             className="absolute -top-14 left-1/2 -translate-x-1/2 z-30 bg-white px-3.5 py-2 border-ink shadow-retro rounded-none text-[10px] font-pixel text-[#1A202C] whitespace-nowrap"
           >
-            <span className="font-bold text-[#059669] mr-1">OAK:</span>
+            <span className="font-bold text-[#059669] mr-1">ARYAN:</span>
             <span>{speechText}</span>
             {/* Speech arrow downward */}
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-[#1A202C]" />
@@ -67,7 +67,7 @@ export const ProfessorOakCharacter: React.FC<ProfessorOakCharacterProps> = ({
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.96 }}
         className="relative cursor-pointer group flex flex-col items-center"
-        title="Professor Samuel Oak (Click to talk!)"
+        title="Professor Aryan Gupta (Click to talk!)"
       >
         {/* Ambient Backlight Glow */}
         <div className="absolute inset-0 bg-emerald-400/20 rounded-full blur-xl group-hover:bg-emerald-400/40 transition-all duration-300 pointer-events-none" />
@@ -82,8 +82,9 @@ export const ProfessorOakCharacter: React.FC<ProfessorOakCharacterProps> = ({
         >
           <Image
             src="/images/professor_oak_bust.png"
-            alt="Professor Oak"
+            alt="Professor Aryan"
             fill
+            sizes="(max-width: 768px) 140px, (max-width: 1024px) 240px, 260px"
             className="object-contain object-bottom drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
             priority
           />
@@ -107,7 +108,7 @@ export const ProfessorOakCharacter: React.FC<ProfessorOakCharacterProps> = ({
         <div className="mt-1 bg-[#1A202C] text-white border-2 border-[#1A202C] px-3 py-0.5 shadow-retro-sm flex items-center gap-1.5 group-hover:bg-[#065F46] group-hover:border-[#10B981] transition-colors z-10">
           <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
           <span className="font-pixel text-[8px] md:text-[9px] tracking-wider text-white">
-            PROF. SAMUEL OAK
+            PROF. ARYAN GUPTA
           </span>
         </div>
 

@@ -16,7 +16,7 @@ interface DialogueBoxProps {
 
 export const DialogueBox: React.FC<DialogueBoxProps> = ({
   dialogueText,
-  speakerName = 'PROF. OAK',
+  speakerName = 'PROF. ARYAN',
   onDownloadCv,
   className = '',
   isMobile = false,

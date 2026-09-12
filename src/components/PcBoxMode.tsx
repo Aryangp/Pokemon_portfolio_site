@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { StarterProject, PC_BOX_PROJECTS } from '@/data/portfolioData';
 import { PokeBallSprite } from './PokeBallSprite';
@@ -78,7 +79,7 @@ export const PcBoxMode: React.FC<PcBoxModeProps> = ({
           <div className="flex items-center gap-2">
             <Monitor className="w-5 h-5 text-[#34D399] animate-pulse" />
             <span className="font-pixel text-xs md:text-sm tracking-wider text-[#34D399]">
-              BILL&apos;S PC SYSTEM // PROJECT STORAGE & ARCHIVE
+              PROF. ARYAN LABS // BILL&apos;S PC STORAGE ARCHIVE
             </span>
           </div>
 
@@ -158,7 +159,7 @@ export const PcBoxMode: React.FC<PcBoxModeProps> = ({
             >
               {Array.from({ length: 24 }).map((_, slotIndex) => {
                 const project = filteredProjects[slotIndex];
-                const isSelected = project && selectedProject.id === project.id;
+                const isSelected = project && selectedProject?.id === project.id;
 
                 return (
                   <div
@@ -235,6 +236,21 @@ export const PcBoxMode: React.FC<PcBoxModeProps> = ({
                 </span>
               </div>
             </div>
+
+            {/* Project Cover Preview Thumbnail */}
+            {selectedProject.coverImage && (
+              <div className="relative w-full h-32 bg-black border border-gray-400 overflow-hidden">
+                <Image
+                  src={selectedProject.coverImage}
+                  alt={selectedProject.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 500px"
+                  className="object-cover object-center"
+                  unoptimized
+                />
+                <div className="absolute inset-0 scanlines opacity-20 pointer-events-none" />
+              </div>
+            )}
 
             {/* Summary & Flavor Text */}
             <div className="bg-[#F8FAFC] border-ink p-3">

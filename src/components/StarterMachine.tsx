@@ -37,21 +37,25 @@ export const StarterMachine: React.FC<StarterMachineProps> = ({
     }
   };
 
+  const ballCount = projects.length;
+  const ballSize = ballCount > 5 ? 46 : 54;
+  const pedestalWidth = ballCount > 5 ? 'w-[52px]' : 'w-[60px]';
+
   return (
-    <div className="relative flex flex-col items-center justify-center w-full max-w-[760px] mx-auto select-none">
+    <div className="relative flex flex-col items-center justify-center w-full max-w-[820px] mx-auto select-none">
       
       {/* Machine Capsule Main Frame */}
-      <div className="w-full h-[120px] bg-gradient-to-b from-[#E2E8F0] via-[#CBD5E1] to-[#94A3B8] border-ink-4 shadow-retro-lg relative rounded-none flex items-center justify-around px-4 md:px-8">
+      <div className="w-full min-h-[124px] bg-gradient-to-b from-[#E2E8F0] via-[#CBD5E1] to-[#94A3B8] border-ink-4 shadow-retro-lg relative rounded-none flex items-center justify-around px-2 md:px-6">
         
         {/* Machine Top Accent Bar / Metallic Rim */}
-        <div className="absolute top-0 left-0 right-0 h-3.5 bg-[#475569] border-b-2 border-[#1A202C] flex items-center justify-between px-4">
+        <div className="absolute top-0 left-0 right-0 h-3.5 bg-[#475569] border-b-2 border-[#1A202C] flex items-center justify-between px-3">
           <div className="flex gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
             <span className="w-1.5 h-1.5 rounded-full bg-[#06B6D4]" />
             <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]" />
           </div>
-          <span className="text-[7.5px] font-pixel text-[#E2E8F0] tracking-widest uppercase">
-            SILPH CO. STARTER DISPENSER // v4.2
+          <span className="text-[7.5px] font-pixel text-[#E2E8F0] tracking-widest uppercase truncate max-w-[340px]">
+            SILPH CO. STARTER DISPENSER // PROF. ARYAN LABS
           </span>
           <div className="flex gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#F59E0B]" />
@@ -60,14 +64,14 @@ export const StarterMachine: React.FC<StarterMachineProps> = ({
         </div>
 
         {/* Machine Base Vent Slots */}
-        <div className="absolute bottom-1 left-6 right-6 h-2 flex justify-between px-2 opacity-50">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="w-3 h-1 bg-[#1A202C]" />
+        <div className="absolute bottom-1 left-4 right-4 h-2 flex justify-between px-2 opacity-50">
+          {Array.from({ length: 14 }).map((_, i) => (
+            <div key={i} className="w-2.5 h-1 bg-[#1A202C]" />
           ))}
         </div>
 
-        {/* Pokéball Slots / Pedestals (5 starters) */}
-        {projects.slice(0, 5).map((project, idx) => {
+        {/* Pokéball Slots / Pedestals */}
+        {projects.map((project, idx) => {
           const isHovered = hoveredProjectId === project.id;
 
           return (
@@ -93,7 +97,7 @@ export const StarterMachine: React.FC<StarterMachineProps> = ({
                   animate={{ opacity: 1, scaleY: 1 }}
                   exit={{ opacity: 0, scaleY: 0 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute bottom-7 w-14 h-48 -top-32 pointer-events-none z-0 flex flex-col items-center justify-end origin-bottom"
+                  className="absolute bottom-7 w-12 h-48 -top-32 pointer-events-none z-0 flex flex-col items-center justify-end origin-bottom"
                 >
                   <div className="w-full h-full bg-gradient-to-t from-[#06B6D4]/50 via-[#06B6D4]/25 to-transparent cyan-beam-active" />
                   <div className="w-0.5 h-full bg-cyan-200/90 absolute" />
@@ -127,17 +131,17 @@ export const StarterMachine: React.FC<StarterMachineProps> = ({
               )}
 
               {/* 3D Pokéball on Pedestal */}
-              <div className="cursor-pointer relative z-10">
+              <div className="cursor-pointer relative z-10 transition-transform duration-150 group-hover:-translate-y-1">
                 <PokeBallSprite
                   type={project.ballType}
-                  size={54}
+                  size={ballSize}
                   isHovered={isHovered}
                   interactive={true}
                 />
               </div>
 
-              {/* Metallic Pedestal (60px x 16px) */}
-              <div className="w-[60px] h-[16px] relative flex flex-col items-center justify-center mt-1">
+              {/* Metallic Pedestal */}
+              <div className={`${pedestalWidth} h-[16px] relative flex flex-col items-center justify-center mt-1`}>
                 {/* Pedestal Top Ring */}
                 <div
                   className={`w-full h-3 bg-gradient-to-r from-[#64748B] via-[#E2E8F0] to-[#64748B] border-ink border-2 flex items-center justify-center transition-all ${
@@ -152,11 +156,11 @@ export const StarterMachine: React.FC<StarterMachineProps> = ({
                   />
                 </div>
                 {/* Pedestal Base Collar */}
-                <div className="w-10 h-1.5 bg-[#334155] border-x-2 border-b-2 border-[#1A202C]" />
+                <div className="w-8 h-1.5 bg-[#334155] border-x-2 border-b-2 border-[#1A202C]" />
               </div>
 
               {/* Pedestal Number Badge */}
-              <div className="text-[8px] font-pixel text-[#475569] mt-0.5">
+              <div className="text-[7.5px] font-pixel text-[#475569] mt-0.5">
                 NO.0{idx + 1}
               </div>
             </div>
@@ -166,4 +170,3 @@ export const StarterMachine: React.FC<StarterMachineProps> = ({
     </div>
   );
 };
-

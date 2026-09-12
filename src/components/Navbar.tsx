@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               TRAINER.DEV
             </span>
             <span className="text-[9px] md:text-[10px] font-pixel text-[#4B5563] hidden sm:inline">
-              OAK&apos;S RESEARCH LAB
+              PROF. ARYAN LABS
             </span>
           </div>
         </button>

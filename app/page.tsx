@@ -113,7 +113,7 @@ export default function Home() {
             onInspectProject={(proj) => setInspectedProject(proj)}
           />
         ) : (
-          /* VIEW B: PROFESSOR OAK'S RESEARCH LAB */
+          /* VIEW B: PROFESSOR ARYAN'S RESEARCH LAB */
           <>
             {/* DESKTOP VIEWPORT (>= 1024px: 1440px x 900px Canvas, Zero Scroll) */}
             <section className="hidden lg:flex flex-col items-center justify-between w-full max-w-[1440px] h-[calc(900px-64px)] relative select-none px-6 py-4">
@@ -125,8 +125,9 @@ export default function Home() {
                 <div className="absolute inset-0 z-0">
                   <Image
                     src="/images/pokemon_lab_background.jpg"
-                    alt="Professor Oak's Pokémon Research Laboratory"
+                    alt="Professor Aryan's Pokémon Research Laboratory"
                     fill
+                    sizes="100vw"
                     className="object-cover object-center"
                     priority
                   />
@@ -150,7 +151,7 @@ export default function Home() {
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                     </div>
                     <div className="font-dialogue text-[17px] text-emerald-100 leading-[18px]">
-                      &gt; Stack: Next.js 16 + React 19<br />
+                      &gt; Stack: Full-Stack + AI + Web3<br />
                       &gt; Lab: Pallet Town Facility #01<br />
                       &gt; Badges: 8 / 8 Kanto Badges Verified
                     </div>
@@ -161,22 +162,22 @@ export default function Home() {
                     <div className="bg-[#1A202C]/90 backdrop-blur-sm border-2 border-white px-5 py-1.5 shadow-retro-sm">
                       <span className="font-pixel text-[11px] text-white tracking-widest font-bold flex items-center gap-2">
                         <span className="text-amber-400">★</span>
-                        <span>PROF. OAK RESEARCH & CODE LAB</span>
+                        <span>PROF. ARYAN RESEARCH & CODE LAB</span>
                         <span className="text-amber-400">★</span>
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="bg-blue-600/90 border border-white px-2.5 py-0.5 font-pixel text-[9px] text-white shadow-retro-sm">
-                        TypeScript
+                        Python & JS
                       </div>
                       <div className="bg-black/90 border border-white px-2.5 py-0.5 font-pixel text-[9px] text-white shadow-retro-sm">
-                        Next.js 16
+                        React & Next.js
                       </div>
                       <div className="bg-emerald-600/90 border border-white px-2.5 py-0.5 font-pixel text-[9px] text-white shadow-retro-sm">
-                        Tailwind CSS
+                        AI & Vision
                       </div>
                       <div className="bg-amber-600/90 border border-white px-2.5 py-0.5 font-pixel text-[9px] text-white shadow-retro-sm">
-                        AI & Full-Stack
+                        Web3 & Cloud
                       </div>
                     </div>
                   </div>
@@ -186,7 +187,7 @@ export default function Home() {
                     <div className="bg-[#1A202C]/90 backdrop-blur-sm border-2 border-emerald-400 px-3.5 py-1.5 shadow-retro-sm flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse" />
                       <span className="font-pixel text-[9px] text-emerald-300">
-                        DISPENSER: ONLINE (5 STARTERS)
+                        DISPENSER: ONLINE ({STARTER_PROJECTS.length} STARTERS)
                       </span>
                     </div>
                     <div className="bg-[#1E293B]/80 backdrop-blur-sm border border-gray-400 px-2.5 py-1 text-[8px] font-pixel text-gray-200">
@@ -196,11 +197,11 @@ export default function Home() {
 
                 </div>
 
-                {/* 3. CENTER STAGE: GROUNDED STARTER TABLE + PROFESSOR OAK */}
+                {/* 3. CENTER STAGE: GROUNDED STARTER TABLE + PROFESSOR ARYAN */}
                 <div className="w-full flex-1 relative z-10 flex items-center justify-between px-10 pb-36">
                   
                   {/* Center-Left: Grounded Starter Table with Solid Legs & Shadows */}
-                  <div className="flex-1 max-w-[800px] flex flex-col items-center justify-center">
+                  <div className="flex-1 max-w-[840px] flex flex-col items-center justify-center">
                     <StarterMachine
                       projects={STARTER_PROJECTS}
                       hoveredProjectId={hoveredProject?.id || null}
@@ -209,12 +210,12 @@ export default function Home() {
                     />
                   </div>
 
-                  {/* Right Side: High-Resolution Scaled Up Professor Oak */}
-                  <div className="shrink-0 flex flex-col items-center justify-end pl-6">
+                  {/* Right Side: High-Resolution Scaled Up Professor Character */}
+                  <div className="shrink-0 flex flex-col items-center justify-end pl-4">
                     <ProfessorOakCharacter
                       onOakClick={() => {
                         setDialogueText(
-                          'PROF. OAK: "Every starter in that Silph Co. dispenser contains a complete production architecture! Pick one to examine its Pokédex technical specs!"'
+                          'PROF. ARYAN: "Every starter in that Silph Co. dispenser contains a complete production architecture! Pick one to examine its Pokédex technical specs!"'
                         );
                       }}
                       size="large"
@@ -227,7 +228,7 @@ export default function Home() {
                 <div className="absolute bottom-[20px] left-1/2 -translate-x-1/2 z-20 w-[920px] max-w-[95%]">
                   <DialogueBox
                     dialogueText={dialogueText}
-                    speakerName="PROF. OAK"
+                    speakerName="PROF. ARYAN"
                     onDownloadCv={handleDownloadCv}
                   />
                 </div>
@@ -243,8 +244,9 @@ export default function Home() {
                 <div className="absolute inset-0 z-0">
                   <Image
                     src="/images/pokemon_lab_background.jpg"
-                    alt="Professor Oak's Pokémon Research Laboratory"
+                    alt="Professor Aryan's Pokémon Research Laboratory"
                     fill
+                    sizes="100vw"
                     className="object-cover object-center"
                     priority
                   />
@@ -272,7 +274,7 @@ export default function Home() {
               <div className="w-full">
                 <DialogueBox
                   dialogueText={dialogueText}
-                  speakerName="PROF. OAK"
+                  speakerName="PROF. ARYAN"
                   onDownloadCv={handleDownloadCv}
                   isMobile={true}
                 />
@@ -285,7 +287,7 @@ export default function Home() {
                     STARTER POKÉBALLS:
                   </span>
                   <span className="font-pixel text-[8px] text-emerald-400">
-                    TAP TO INSPECT
+                    TAP TO INSPECT ({STARTER_PROJECTS.length})
                   </span>
                 </div>
 
