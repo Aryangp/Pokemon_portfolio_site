@@ -5,8 +5,8 @@ import { Volume2, VolumeX, Terminal, Cpu } from 'lucide-react';
 import { sound } from '@/lib/soundEffects';
 
 interface NavbarProps {
-  currentTab: 'lab' | 'pcbox' | 'badges' | 'party' | 'pokenav';
-  onSelectTab: (tab: 'lab' | 'pcbox' | 'badges' | 'party' | 'pokenav') => void;
+  currentTab: 'lab' | 'pcbox' | 'career' | 'badges' | 'party' | 'pokenav';
+  onSelectTab: (tab: 'lab' | 'pcbox' | 'career' | 'badges' | 'party' | 'pokenav') => void;
   isExeMode: boolean;
   onToggleExeMode: () => void;
   onOpenMobileDrawer: () => void;
@@ -26,9 +26,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     setIsMuted(nextMute);
   };
 
-  const navItems: Array<{ id: 'lab' | 'pcbox' | 'badges' | 'party' | 'pokenav'; label: string }> = [
+  const navItems: Array<{ id: 'lab' | 'pcbox' | 'career' | 'badges' | 'party' | 'pokenav'; label: string }> = [
     { id: 'lab', label: 'LAB' },
     { id: 'pcbox', label: 'PC BOX' },
+    { id: 'career', label: 'CAREER' },
     { id: 'badges', label: 'BADGES' },
     { id: 'party', label: 'PARTY' },
     { id: 'pokenav', label: 'POKÉNAV' },

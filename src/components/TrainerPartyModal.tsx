@@ -6,87 +6,22 @@ import { X, Users, Zap, Shield, Flame, Droplets, Leaf } from 'lucide-react';
 import { sound } from '@/lib/soundEffects';
 import { PokeBallSprite, PokeBallType } from './PokeBallSprite';
 
+import { DEFAULT_RESUME_DATA, PartyMember } from '@/data/resumeData';
+
 interface TrainerPartyModalProps {
   isOpen: boolean;
   onClose: () => void;
+  partyMembers?: PartyMember[];
 }
 
-interface PartyMember {
-  id: string;
-  name: string;
-  role: string;
-  type: 'Electric' | 'Water' | 'Grass' | 'Fire' | 'Psychic' | 'Steel';
-  level: number;
-  ballType: PokeBallType;
-  hp: string;
-  moves: string[];
-}
-
-const PARTY: PartyMember[] = [
-  {
-    id: 'p1',
-    name: 'NEXT.JS ARCHITECT',
-    role: 'Lead Frontend Spec',
-    type: 'Electric',
-    level: 85,
-    ballType: 'masterball',
-    hp: '320 / 320',
-    moves: ['Server Action', 'Turbopack Burst', 'SSR Stream', 'Edge Routing'],
-  },
-  {
-    id: 'p2',
-    name: 'TYPESCRIPT SENTRY',
-    role: 'Static Analysis Spec',
-    type: 'Steel',
-    level: 82,
-    ballType: 'heavyball',
-    hp: '295 / 295',
-    moves: ['Strict Null Check', 'Generic Shield', 'Infer Wave', 'Discriminated Union'],
-  },
-  {
-    id: 'p3',
-    name: 'REACT 19 COMPILER',
-    role: 'UI Performance Engine',
-    type: 'Grass',
-    level: 78,
-    ballType: 'cherishball',
-    hp: '280 / 280',
-    moves: ['useOptimistic', 'useActionState', 'Auto Memoize', 'Async Transition'],
-  },
-  {
-    id: 'p4',
-    name: 'RUST & WASM CORE',
-    role: 'Low-Latency Engine',
-    type: 'Fire',
-    level: 76,
-    ballType: 'luxuryball',
-    hp: '270 / 270',
-    moves: ['Zero Cost Abstraction', 'Memory Safety', 'SIMD Blast', 'Thread Concurrency'],
-  },
-  {
-    id: 'p5',
-    name: 'POSTGRES / PRISMA',
-    role: 'Relational Store',
-    type: 'Water',
-    level: 80,
-    ballType: 'diveball',
-    hp: '310 / 310',
-    moves: ['B-Tree Index', 'ACID Shield', 'Connection Pool', 'JSONB Query'],
-  },
-  {
-    id: 'p6',
-    name: 'AGENTIC AI DRIVER',
-    role: 'Autonomous Reasoning',
-    type: 'Psychic',
-    level: 90,
-    ballType: 'ultraball',
-    hp: '350 / 350',
-    moves: ['Semantic Embed', 'Tool Calling', 'Context Window', 'Self-Correction'],
-  },
-];
-
-export const TrainerPartyModal: React.FC<TrainerPartyModalProps> = ({ isOpen, onClose }) => {
+export const TrainerPartyModal: React.FC<TrainerPartyModalProps> = ({
+  isOpen,
+  onClose,
+  partyMembers = DEFAULT_RESUME_DATA.partyMembers,
+}) => {
   if (!isOpen) return null;
+
+  const members = partyMembers && partyMembers.length > 0 ? partyMembers : DEFAULT_RESUME_DATA.partyMembers;
 
   return (
     <AnimatePresence>
@@ -122,7 +57,7 @@ export const TrainerPartyModal: React.FC<TrainerPartyModalProps> = ({ isOpen, on
 
           {/* Party Cards Grid */}
           <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {PARTY.map((member) => (
+            {members.map((member) => (
               <div
                 key={member.id}
                 className="bg-white border-ink p-3.5 shadow-retro-sm flex flex-col gap-2"

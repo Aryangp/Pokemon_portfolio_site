@@ -1,14 +1,22 @@
 'use client';
 
 import React from 'react';
-import { DEVELOPER_PROFILE } from '@/data/portfolioData';
+import { DEFAULT_RESUME_DATA, DeveloperProfile } from '@/data/resumeData';
 import { OakAvatar } from './OakAvatar';
 import { RadarChart } from './RadarChart';
 import { GymBadgesRow } from './GymBadgesRow';
 import { sound } from '@/lib/soundEffects';
 import { Award, Zap, Heart, Brain, Sparkles } from 'lucide-react';
 
-export const TrainerCardView: React.FC = () => {
+interface TrainerCardViewProps {
+  profile?: DeveloperProfile;
+}
+
+export const TrainerCardView: React.FC<TrainerCardViewProps> = ({
+  profile = DEFAULT_RESUME_DATA.profile,
+}) => {
+  const currentProfile = profile || DEFAULT_RESUME_DATA.profile;
+
   return (
     <div className="w-full max-w-[1000px] min-h-[640px] blueprint-grid border-gba shadow-gba-lg p-4 md:p-8 flex flex-col justify-center select-none mx-auto">
       
@@ -27,13 +35,16 @@ export const TrainerCardView: React.FC = () => {
                 Trainer ID: #00151
               </span>
               <div className="font-pixel text-[11px] text-[#10B981]">
-                Name: {DEVELOPER_PROFILE.name}
+                Name: {currentProfile.name}
               </div>
               <div className="font-pixel text-[9.5px] text-[#475569]">
-                Level/Yrs Exp: 3+ Yrs Professional
+                Level/Role: SDE 1 Backend Engineer
               </div>
               <div className="font-pixel text-[8.5px] text-[#64748B]">
-                Class: {DEVELOPER_PROFILE.trainerClass}
+                Class: {currentProfile.trainerClass}
+              </div>
+              <div className="font-pixel text-[8px] text-[#059669]">
+                ★ UIET Panjab Univ (CGPA 9.00)
               </div>
             </div>
           </div>

@@ -4,16 +4,23 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Compass, Mail, MapPin, Send, PhoneCall } from 'lucide-react';
 import { sound } from '@/lib/soundEffects';
-import { DEVELOPER_PROFILE } from '@/data/portfolioData';
+import { DEFAULT_RESUME_DATA, DeveloperProfile } from '@/data/resumeData';
 import { GithubIcon, LinkedinIcon } from './Icons';
 
 interface PokeNavModalProps {
   isOpen: boolean;
   onClose: () => void;
+  profile?: DeveloperProfile;
 }
 
-export const PokeNavModal: React.FC<PokeNavModalProps> = ({ isOpen, onClose }) => {
+export const PokeNavModal: React.FC<PokeNavModalProps> = ({
+  isOpen,
+  onClose,
+  profile = DEFAULT_RESUME_DATA.profile,
+}) => {
   if (!isOpen) return null;
+
+  const currentProfile = profile || DEFAULT_RESUME_DATA.profile;
 
   return (
     <AnimatePresence>
@@ -55,10 +62,10 @@ export const PokeNavModal: React.FC<PokeNavModalProps> = ({ isOpen, onClose }) =
               <div className="flex items-center justify-between border-b-2 border-gray-100 pb-2">
                 <div>
                   <span className="font-pixel text-xs text-[#1A202C]">
-                    {DEVELOPER_PROFILE.name}
+                    {currentProfile.name}
                   </span>
                   <p className="font-pixel text-[9px] text-[#10B981]">
-                    {DEVELOPER_PROFILE.title}
+                    {currentProfile.title}
                   </p>
                 </div>
                 <span className="font-pixel text-[8px] bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-1">
@@ -68,7 +75,7 @@ export const PokeNavModal: React.FC<PokeNavModalProps> = ({ isOpen, onClose }) =
 
               <div className="flex items-center gap-2 text-[#475569] font-pixel text-[9px]">
                 <MapPin className="w-4 h-4 text-[#EF4444]" />
-                <span>{DEVELOPER_PROFILE.location}</span>
+                <span>{currentProfile.location}</span>
               </div>
             </div>
 
@@ -79,7 +86,7 @@ export const PokeNavModal: React.FC<PokeNavModalProps> = ({ isOpen, onClose }) =
               </span>
 
               <a
-                href={`mailto:${DEVELOPER_PROFILE.email}`}
+                href={`mailto:${currentProfile.email}`}
                 onClick={() => sound.playSelect()}
                 className="bg-white hover:bg-gray-50 border-ink p-3 shadow-retro-sm flex items-center justify-between btn-retro cursor-pointer text-[#1A202C]"
               >
@@ -89,14 +96,14 @@ export const PokeNavModal: React.FC<PokeNavModalProps> = ({ isOpen, onClose }) =
                   </div>
                   <div>
                     <div className="font-pixel text-[10px]">EMAIL INBOX</div>
-                    <div className="font-dialogue text-lg text-gray-600">{DEVELOPER_PROFILE.email}</div>
+                    <div className="font-dialogue text-lg text-gray-600">{currentProfile.email}</div>
                   </div>
                 </div>
                 <Send className="w-4 h-4 text-[#10B981]" />
               </a>
 
               <a
-                href={DEVELOPER_PROFILE.githubUrl}
+                href={currentProfile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playSelect()}
@@ -115,7 +122,7 @@ export const PokeNavModal: React.FC<PokeNavModalProps> = ({ isOpen, onClose }) =
               </a>
 
               <a
-                href={DEVELOPER_PROFILE.linkedinUrl}
+                href={currentProfile.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playSelect()}

@@ -8,7 +8,7 @@ import { sound } from '@/lib/soundEffects';
 interface MobileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelectTab: (tab: 'lab' | 'pcbox' | 'badges' | 'party' | 'pokenav') => void;
+  onSelectTab: (tab: 'lab' | 'pcbox' | 'career' | 'badges' | 'party' | 'pokenav') => void;
   onDownloadCv: () => void;
   isMuted: boolean;
   onToggleSound: () => void;
@@ -24,12 +24,13 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const menuItems: Array<{ id: 'lab' | 'pcbox' | 'badges' | 'party' | 'pokenav'; label: string; desc: string }> = [
+  const menuItems: Array<{ id: 'lab' | 'pcbox' | 'career' | 'badges' | 'party' | 'pokenav'; label: string; desc: string }> = [
     { id: 'lab', label: "1. PROF. ARYAN'S LAB", desc: 'Starter Machine & Overview' },
-    { id: 'pcbox', label: '2. BILL\'S PC [EXE]', desc: 'Project Storage Boxes' },
-    { id: 'badges', label: '3. GYM BADGES', desc: '8/8 Technical Badges' },
-    { id: 'party', label: '4. BATTLE PARTY', desc: 'Active Tech Stack' },
-    { id: 'pokenav', label: '5. POKÉNAV', desc: 'Contact & Channels' },
+    { id: 'pcbox', label: "2. BILL'S PC [EXE]", desc: 'Project Storage Boxes' },
+    { id: 'career', label: '3. CAREER EXPEDITIONS', desc: 'Policybazaar & Work History' },
+    { id: 'badges', label: '4. GYM BADGES', desc: '8/8 Technical Badges' },
+    { id: 'party', label: '5. BATTLE PARTY', desc: 'Active Tech Stack' },
+    { id: 'pokenav', label: '6. POKÉNAV', desc: 'Contact & Channels' },
   ];
 
   return (

@@ -32,11 +32,20 @@ export const RAW_PORTFOLIO_DATA: RawPortfolioItem[] = [
   {
     cover: '/portfolio/img/vgm4esdw.bmp',
     title: 'gpzer my own programing language',
-    description: 'Python',
+    description: 'Python, OOPs, Interpreter Design, Lexer, AST Parser',
     url: 'https://github.com/Aryangp/Aryan-test-framework',
     repoUrl: 'https://github.com/Aryangp/Aryan-test-framework',
     category: 'Compilers / Languages',
     boxCategory: 'Lab Experiments',
+  },
+  {
+    cover: '/portfolio/img/ai-project.png',
+    title: 'NLP Catalog Indexing Engine',
+    description: 'Python, FastAPI, Postgres, Weaviate, VectorDB, ML, Next.js',
+    url: 'https://github.com/Aryangp',
+    repoUrl: 'https://github.com/Aryangp',
+    category: 'AI / Vector Search',
+    boxCategory: 'Production',
   },
   {
     cover: '/portfolio/img/u2skgisz.bmp',

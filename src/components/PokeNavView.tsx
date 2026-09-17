@@ -2,12 +2,19 @@
 
 import React, { useState } from 'react';
 import { sound } from '@/lib/soundEffects';
-import { DEVELOPER_PROFILE } from '@/data/portfolioData';
+import { DEFAULT_RESUME_DATA, DeveloperProfile } from '@/data/resumeData';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { Mail, Send, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export const PokeNavView: React.FC = () => {
+interface PokeNavViewProps {
+  profile?: DeveloperProfile;
+}
+
+export const PokeNavView: React.FC<PokeNavViewProps> = ({
+  profile = DEFAULT_RESUME_DATA.profile,
+}) => {
+  const currentProfile = profile || DEFAULT_RESUME_DATA.profile;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -59,7 +66,7 @@ export const PokeNavView: React.FC = () => {
           
           {/* LinkedIn Button */}
           <a
-            href={DEVELOPER_PROFILE.linkedinUrl}
+            href={currentProfile.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playSelect()}
@@ -71,7 +78,7 @@ export const PokeNavView: React.FC = () => {
 
           {/* GitHub Button */}
           <a
-            href={DEVELOPER_PROFILE.githubUrl}
+            href={currentProfile.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playSelect()}
@@ -83,7 +90,7 @@ export const PokeNavView: React.FC = () => {
 
           {/* Email Button */}
           <a
-            href={`mailto:${DEVELOPER_PROFILE.email}`}
+            href={`mailto:${currentProfile.email}`}
             onClick={() => sound.playSelect()}
             className="w-16 md:w-20 h-16 md:h-20 bg-[#059669] hover:bg-[#047857] text-white border-gba-sm rounded-xl flex flex-col items-center justify-center p-1.5 shadow-md btn-gba cursor-pointer group"
           >

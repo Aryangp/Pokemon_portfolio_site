@@ -132,6 +132,7 @@ export function generateProjectId(title: string): string {
 export function cleanProjectTitle(title: string): string {
   const titleMap: { [key: string]: string } = {
     'gpzer my own programing language': 'GPZer Programming Language',
+    'nlp catalog indexing engine': 'NLP Catalog Indexing Engine',
     'aryan test framework': 'Aryan Test Framework',
     'e-commerse': 'E-Commerce Platform',
     'dance website': 'Dance Studio Academy',
@@ -157,6 +158,9 @@ export function generateFlavorText(title: string, description: string, typeBadge
 
   if (text.includes('gpzer') || text.includes('programing language')) {
     return 'Forges custom language syntax in raw Python, compiling bespoke statements, AST nodes, and runtime environments with high precision.';
+  }
+  if (text.includes('nlp') || text.includes('weaviate') || text.includes('vector')) {
+    return 'Executes hybrid vector similarity and semantic search queries across high-scale catalogs utilizing Weaviate vector DB and FastAPI async endpoints.';
   }
   if (text.includes('test framework') || text.includes('jest')) {
     return 'Zaps through JavaScript test suites with lightning-fast assertions, providing automated unit test execution and colored terminal diagnostics.';
@@ -191,6 +195,13 @@ export function generateKeyFeatures(title: string, description: string): string[
       'Custom recursive-descent lexer and AST parser in Python',
       'Dynamic variable scoping, conditional branches & loop execution',
       'Custom error reporting and interactive runtime CLI REPL',
+    ];
+  }
+  if (text.includes('nlp') || text.includes('weaviate') || text.includes('vector')) {
+    return [
+      'FastAPI async backend optimized for low-latency search response times',
+      'Dynamic CSV schema definitions and customizable field-based query routing',
+      'Weaviate vector DB with t2v-transformer multilingual & image embeddings',
     ];
   }
   if (text.includes('test framework') || text.includes('jest')) {

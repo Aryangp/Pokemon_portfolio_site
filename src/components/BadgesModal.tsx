@@ -5,98 +5,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Award, ShieldCheck, Star } from 'lucide-react';
 import { sound } from '@/lib/soundEffects';
 
+import { DEFAULT_RESUME_DATA, GymBadge } from '@/data/resumeData';
+
 interface BadgesModalProps {
   isOpen: boolean;
   onClose: () => void;
+  gymBadges?: GymBadge[];
 }
 
-interface GymBadge {
-  id: string;
-  name: string;
-  region: string;
-  skill: string;
-  description: string;
-  color: string;
-  earnedDate: string;
-}
-
-const BADGES: GymBadge[] = [
-  {
-    id: 'boulder',
-    name: 'BOULDER BADGE',
-    region: 'Pewter Gym',
-    skill: 'React 19 & Next.js App Router',
-    description: 'Mastery of rock-solid UI architecture, Server Components, and streaming hydration.',
-    color: '#94A3B8',
-    earnedDate: '2024',
-  },
-  {
-    id: 'cascade',
-    name: 'CASCADE BADGE',
-    region: 'Cerulean Gym',
-    skill: 'TypeScript & Type Safety',
-    description: 'Fluid generic types, strict compile-time safety, and zero-defect data flows.',
-    color: '#38BDF8',
-    earnedDate: '2024',
-  },
-  {
-    id: 'thunder',
-    name: 'THUNDER BADGE',
-    region: 'Vermilion Gym',
-    skill: 'Real-Time WebSockets & Node.js',
-    description: 'High-voltage asynchronous event loops and sub-10ms pub/sub streaming.',
-    color: '#FACC15',
-    earnedDate: '2025',
-  },
-  {
-    id: 'rainbow',
-    name: 'RAINBOW BADGE',
-    region: 'Celadon Gym',
-    skill: 'TailwindCSS & Design Systems',
-    description: 'Vibrant accessible design tokens, micro-interactions, and responsive layouts.',
-    color: '#4ADE80',
-    earnedDate: '2025',
-  },
-  {
-    id: 'soul',
-    name: 'SOUL BADGE',
-    region: 'Fuchsia Gym',
-    skill: 'PostgreSQL, Redis & DB Indexing',
-    description: 'Deep database internals, optimized query execution plans, and caching.',
-    color: '#F472B6',
-    earnedDate: '2025',
-  },
-  {
-    id: 'marsh',
-    name: 'MARSH BADGE',
-    region: 'Saffron Gym',
-    skill: 'AI Agents & LLM Orchestration',
-    description: 'Telepathic semantic routing, RAG architectures, and autonomous agent loops.',
-    color: '#C084FC',
-    earnedDate: '2026',
-  },
-  {
-    id: 'volcano',
-    name: 'VOLCANO BADGE',
-    region: 'Cinnabar Gym',
-    skill: 'DevOps, Docker & CI/CD',
-    description: 'Blazing fast multi-stage container builds and zero-downtime canary deployments.',
-    color: '#FB923C',
-    earnedDate: '2026',
-  },
-  {
-    id: 'earth',
-    name: 'EARTH BADGE',
-    region: 'Viridian Gym',
-    skill: 'Distributed Systems Architecture',
-    description: 'Unshakeable high-availability distributed systems, CRDTs, and fault tolerance.',
-    color: '#A3E635',
-    earnedDate: '2026',
-  },
-];
-
-export const BadgesModal: React.FC<BadgesModalProps> = ({ isOpen, onClose }) => {
+export const BadgesModal: React.FC<BadgesModalProps> = ({
+  isOpen,
+  onClose,
+  gymBadges = DEFAULT_RESUME_DATA.gymBadges,
+}) => {
   if (!isOpen) return null;
+
+  const badges = gymBadges && gymBadges.length > 0 ? gymBadges : DEFAULT_RESUME_DATA.gymBadges;
 
   return (
     <AnimatePresence>
@@ -114,7 +38,7 @@ export const BadgesModal: React.FC<BadgesModalProps> = ({ isOpen, onClose }) => 
             <div className="flex items-center gap-2 text-white">
               <Award className="w-5 h-5" />
               <span className="font-pixel text-xs md:text-sm tracking-wider">
-                KANTO GYM BADGE CASE // 8 OF 8 EARNED
+                KANTO GYM BADGE CASE // {badges.length} OF {badges.length} EARNED
               </span>
             </div>
 
@@ -132,7 +56,7 @@ export const BadgesModal: React.FC<BadgesModalProps> = ({ isOpen, onClose }) => 
 
           {/* Badge Grid */}
           <div className="p-4 md:p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {BADGES.map((badge, idx) => (
+            {badges.map((badge, idx) => (
               <div
                 key={badge.id}
                 className="bg-white border-ink p-3.5 shadow-retro-sm flex gap-3 items-start group hover:border-[#10B981] transition-colors"
