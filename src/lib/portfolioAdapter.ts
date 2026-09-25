@@ -2,13 +2,31 @@ import { StarterProject } from '@/data/portfolioData';
 import { PokeBallType } from '@/components/PokeBallSprite';
 
 export interface RawPortfolioItem {
-  cover: string;
+  id?: string;
+  slug?: string;
+  cover?: string;
+  coverImage?: string;
   title: string;
-  description: string;
-  url: string;
+  description?: string;
+  summary?: string;
+  url?: string;
+  demoUrl?: string;
   repoUrl?: string;
   category?: string;
   boxCategory?: 'Production' | 'Open Source' | 'Lab Experiments';
+  techStack?: string[];
+  ballType?: PokeBallType;
+  typeBadge?: 'Electric' | 'Water' | 'Grass' | 'Fire' | 'Psychic';
+  level?: number;
+  featured?: boolean;
+  stats?: {
+    hp?: number;
+    attack?: number;
+    defense?: number;
+    speed?: number;
+  };
+  flavorText?: string;
+  keyFeatures?: string[];
 }
 
 export interface RawPortfolioResponse {
@@ -255,24 +273,28 @@ export function generateKeyFeatures(title: string, description: string): string[
 }
 
 /**
- * Normalizes a single raw portfolio item into a complete StarterProject
+ * Normalizes a single raw portfolio item or rich backend document into a complete StarterProject
  */
 export function normalizePortfolioItem(
   raw: RawPortfolioItem,
   index: number
 ): StarterProject {
-  const title = cleanProjectTitle(raw.title);
-  const id = generateProjectId(raw.title);
-  const typeBadge = determineElementalType(raw.title, raw.description);
-  const ballType = determineBallType(typeBadge, index);
-  const techStack = parseTechStack(raw.description, raw.title);
-  const flavorText = generateFlavorText(raw.title, raw.description, typeBadge);
-  const keyFeatures = generateKeyFeatures(raw.title, raw.description);
+  const title = cleanProjectTitle(raw.title || 'Project');
+  const id = raw.id || raw.slug || generateProjectId(raw.title || `project-${index}`);
+  const typeBadge = raw.typeBadge || determineElementalType(raw.title || '', raw.description || '');
+  const ballType = raw.ballType || determineBallType(typeBadge, index);
+  const techStack = Array.isArray(raw.techStack) && raw.techStack.length > 0
+    ? raw.techStack
+    : parseTechStack(raw.description || '', raw.title || '');
+  const flavorText = raw.flavorText || generateFlavorText(raw.title || '', raw.description || '', typeBadge);
+  const keyFeatures = Array.isArray(raw.keyFeatures) && raw.keyFeatures.length > 0
+    ? raw.keyFeatures
+    : generateKeyFeatures(raw.title || '', raw.description || '');
 
   // Category determination
   let category = raw.category;
   if (!category) {
-    const text = `${raw.title} ${raw.description}`.toLowerCase();
+    const text = `${raw.title} ${raw.description || ''}`.toLowerCase();
     if (text.includes('language') || text.includes('compiler')) category = 'Compilers / Languages';
     else if (text.includes('test')) category = 'Dev Tools / Testing';
     else if (text.includes('commerce') || text.includes('e-commerse')) category = 'E-Commerce / Full-Stack';
@@ -286,42 +308,47 @@ export function normalizePortfolioItem(
   // Box Category
   let boxCategory = raw.boxCategory;
   if (!boxCategory) {
-    const text = `${raw.title} ${raw.description}`.toLowerCase();
+    const text = `${raw.title} ${raw.description || ''}`.toLowerCase();
     if (text.includes('ai') || text.includes('language')) boxCategory = 'Lab Experiments';
     else if (text.includes('test') || text.includes('solidity')) boxCategory = 'Open Source';
     else boxCategory = 'Production';
   }
 
   // Base level and stats
-  const level = 60 + ((index * 5) % 30);
-  const hp = 90 + ((index * 2) % 10);
-  const attack = 88 + ((index * 3) % 12);
-  const defense = 91 + ((index * 2) % 8);
-  const speed = 89 + ((index * 4) % 11);
+  const level = typeof raw.level === 'number' && raw.level > 0 ? raw.level : (60 + ((index * 5) % 30));
+  const hp = typeof raw.stats?.hp === 'number' ? raw.stats.hp : (90 + ((index * 2) % 10));
+  const attack = typeof raw.stats?.attack === 'number' ? raw.stats.attack : (88 + ((index * 3) % 12));
+  const defense = typeof raw.stats?.defense === 'number' ? raw.stats.defense : (91 + ((index * 2) % 8));
+  const speed = typeof raw.stats?.speed === 'number' ? raw.stats.speed : (89 + ((index * 4) % 11));
 
   // URLs
-  const demoUrl = raw.url || 'https://github.com/Aryangp';
-  const repoUrl = raw.repoUrl || (raw.url.includes('github.com') ? raw.url : 'https://github.com/Aryangp');
+  const demoUrl = raw.demoUrl || raw.url || 'https://github.com/Aryangp';
+  const repoUrl = raw.repoUrl || (raw.url && raw.url.includes('github.com') ? raw.url : 'https://github.com/Aryangp');
+  const coverImage = raw.coverImage || raw.cover || '/portfolio/img/ai-project.png';
 
   // Summary
-  let summary = '';
-  const descLower = raw.description.toLowerCase();
-  if (descLower.includes('python')) {
-    summary = `A custom interpreted programming language engineered from scratch in Python, featuring a bespoke lexer, AST parser, and dynamic runtime execution engine.`;
-  } else if (descLower.includes('jest')) {
-    summary = `A lightweight, high-performance automated JavaScript testing framework and assertion runner inspired by Jest for streamlined unit testing.`;
-  } else if (descLower.includes('stripe') || descLower.includes('commerse')) {
-    summary = `Full-featured modern e-commerce web application with real-time product catalog browsing, cart state management, and Stripe checkout integration.`;
-  } else if (descLower.includes('pug') || descLower.includes('dance')) {
-    summary = `Dynamic web application and studio booking platform featuring server-side template rendering with Pug and an Express.js backend.`;
-  } else if (descLower.includes('ai') || descLower.includes('face')) {
-    summary = `Real-time computer vision and facial emotion recognition web application detecting facial landmarks and classifying live user expressions.`;
-  } else if (descLower.includes('spotify')) {
-    summary = `Interactive web music streaming player clone recreating Spotify's sleek dark UI, custom audio playback controls, playlists, and responsive navigation.`;
-  } else if (descLower.includes('solidity') || descLower.includes('netflix')) {
-    summary = `Web3-enabled Netflix clone combining movie trailer streaming with Firebase backend authentication, TMDB movie catalog API, and Solidity smart contracts.`;
-  } else {
-    summary = `A modern ${techStack.join(', ')} application with high performance, interactive UI, and robust architecture.`;
+  let summary = raw.summary || '';
+  if (!summary) {
+    const descLower = (raw.description || '').toLowerCase();
+    if (descLower.includes('python') && descLower.includes('fastapi')) {
+      summary = `High-performance vector search engine integrating FastAPI asynchronous pipelines with Weaviate vector database and transformer embeddings.`;
+    } else if (descLower.includes('python')) {
+      summary = `A custom interpreted programming language engineered from scratch in Python, featuring a bespoke lexer, AST parser, and dynamic runtime execution engine.`;
+    } else if (descLower.includes('jest')) {
+      summary = `A lightweight, high-performance automated JavaScript testing framework and assertion runner inspired by Jest for streamlined unit testing.`;
+    } else if (descLower.includes('stripe') || descLower.includes('commerse')) {
+      summary = `Full-featured modern e-commerce web application with real-time product catalog browsing, cart state management, and Stripe checkout integration.`;
+    } else if (descLower.includes('pug') || descLower.includes('dance')) {
+      summary = `Dynamic web application and studio booking platform featuring server-side template rendering with Pug and an Express.js backend.`;
+    } else if (descLower.includes('ai') || descLower.includes('face')) {
+      summary = `Real-time computer vision and facial emotion recognition web application detecting facial landmarks and classifying live user expressions.`;
+    } else if (descLower.includes('spotify')) {
+      summary = `Interactive web music streaming player clone recreating Spotify's sleek dark UI, custom audio playback controls, playlists, and responsive navigation.`;
+    } else if (descLower.includes('solidity') || descLower.includes('netflix')) {
+      summary = `Web3-enabled Netflix clone combining movie trailer streaming with Firebase backend authentication, TMDB movie catalog API, and Solidity smart contracts.`;
+    } else {
+      summary = `A modern ${techStack.join(', ')} application with high performance, interactive UI, and robust architecture.`;
+    }
   }
 
   return {
@@ -333,7 +360,7 @@ export function normalizePortfolioItem(
     techStack,
     demoUrl,
     repoUrl,
-    coverImage: raw.cover,
+    coverImage,
     stats: {
       hp: Math.min(hp, 99),
       attack: Math.min(attack, 99),

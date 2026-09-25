@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { STARTER_PROJECTS, StarterProject } from '@/data/portfolioData';
+import { StarterProject } from '@/data/portfolioData';
 import { useDynamicResumeData } from '@/lib/resumeService';
+import { useDynamicProjects } from '@/lib/portfolioService';
 import { sound } from '@/lib/soundEffects';
 
 // Components
@@ -26,6 +27,7 @@ import { Cpu, FileText, Briefcase, Sparkles } from 'lucide-react';
 
 export default function Home() {
   const { resumeData, isRemote, dataSource, reload: reloadResume } = useDynamicResumeData();
+  const { projects, isLive: isProjectsLive } = useDynamicProjects();
   const [isLoading, setIsLoading] = useState(true);
   const [isExeMode, setIsExeMode] = useState(false);
   const [activeTab, setActiveTab] = useState<'lab' | 'pcbox' | 'career' | 'badges' | 'party' | 'pokenav'>('lab');
@@ -119,6 +121,7 @@ export default function Home() {
         {/* VIEW A: BILL'S PC BOX MODE (EXE MODE) */}
         {isExeMode ? (
           <PcBoxMode
+            projects={projects}
             onReturnToLab={() => {
               setIsExeMode(false);
               setActiveTab('lab');
@@ -161,11 +164,11 @@ export default function Home() {
                           LAB_RESEARCH_LOG.SYS
                         </span>
                       </div>
-                      <span className={`w-2 h-2 rounded-full ${isRemote ? 'bg-emerald-400 animate-ping' : 'bg-blue-400'}`} />
+                      <span className={`w-2 h-2 rounded-full ${isProjectsLive || isRemote ? 'bg-emerald-400 animate-ping' : 'bg-blue-400'}`} />
                     </div>
                     <div className="font-dialogue text-[17px] text-emerald-100 leading-[18px]">
                       &gt; SDE 1: Policybazaar (Backend)<br />
-                      &gt; Stack: .NET 8 + Python + Kafka<br />
+                      &gt; Go API: {isProjectsLive ? 'RENDER API (LIVE)' : 'BUNDLED BACKUP'}<br />
                       &gt; Gist Sync: {isRemote ? 'GITHUB GIST (LIVE)' : 'LOCAL DATASET'}
                     </div>
                   </div>
@@ -200,7 +203,7 @@ export default function Home() {
                     <div className="bg-[#1A202C]/90 backdrop-blur-sm border-2 border-emerald-400 px-3.5 py-1.5 shadow-retro-sm flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse" />
                       <span className="font-pixel text-[9px] text-emerald-300">
-                        DISPENSER: ONLINE ({STARTER_PROJECTS.length} STARTERS)
+                        DISPENSER: ONLINE ({projects.length} STARTERS)
                       </span>
                     </div>
                     <button
@@ -210,7 +213,7 @@ export default function Home() {
                       }}
                       className="bg-[#10B981] hover:bg-[#059669] text-white border border-white px-2.5 py-1 text-[8.5px] font-pixel btn-retro flex items-center gap-1 cursor-pointer"
                     >
-                      <Briefcase className="w-3 h-3" />
+                      <Briefcase className="w-3.5 h-3.5" />
                       <span>VIEW CAREER EXPEDITIONS</span>
                     </button>
                   </div>
@@ -223,7 +226,7 @@ export default function Home() {
                   {/* Center-Left: Grounded Starter Table with Solid Legs & Shadows */}
                   <div className="flex-1 max-w-[840px] flex flex-col items-center justify-center">
                     <StarterMachine
-                      projects={STARTER_PROJECTS}
+                      projects={projects}
                       hoveredProjectId={hoveredProject?.id || null}
                       onHoverProject={(proj) => setHoveredProject(proj)}
                       onSelectProject={(proj) => setInspectedProject(proj)}
@@ -319,12 +322,12 @@ export default function Home() {
                     STARTER POKÉBALLS:
                   </span>
                   <span className="font-pixel text-[8px] text-emerald-400">
-                    TAP TO INSPECT ({STARTER_PROJECTS.length})
+                    TAP TO INSPECT ({projects.length})
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  {STARTER_PROJECTS.map((project) => (
+                  {projects.map((project) => (
                     <button
                       key={project.id}
                       onClick={() => {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RAW_PORTFOLIO_DATA, STARTER_PROJECTS } from '@/data/portfolioData';
 import { normalizePortfolioData, RawPortfolioItem, RawPortfolioResponse } from '@/lib/portfolioAdapter';
+import { API_ENDPOINTS } from '@/lib/apiConfig';
 
 /**
  * GET /api/portfolio
@@ -15,31 +16,36 @@ export async function GET(request: NextRequest) {
   const sourceParam = searchParams.get('source');
 
   try {
-    // If source parameter is provided, fetch dynamically from external API
-    if (sourceParam) {
-      const externalRes = await fetch(sourceParam, {
+    // If source parameter is provided or default backend projects endpoint
+    const endpoint = sourceParam || API_ENDPOINTS.projects;
+
+    if (sourceParam || endpoint) {
+      const externalRes = await fetch(endpoint, {
         headers: { 'Accept': 'application/json' },
         next: { revalidate: 60 },
       });
 
-      if (!externalRes.ok) {
-        return NextResponse.json(
-          { error: `Failed to fetch from external source: ${externalRes.statusText}` },
-          { status: 502 }
-        );
+      if (externalRes.ok) {
+        const externalJson = await externalRes.json();
+        let rawList: RawPortfolioItem[] = [];
+        if (Array.isArray(externalJson)) {
+          rawList = externalJson;
+        } else if (Array.isArray(externalJson.data)) {
+          rawList = externalJson.data;
+        } else if (Array.isArray(externalJson.projects)) {
+          rawList = externalJson.projects;
+        } else if (Array.isArray(externalJson.portfolio)) {
+          rawList = externalJson.portfolio;
+        }
+
+        const normalized = normalizePortfolioData(rawList);
+        return NextResponse.json({
+          status: 'success',
+          source: endpoint,
+          count: normalized.length,
+          projects: normalized,
+        });
       }
-
-      const externalJson = await externalRes.json();
-      const rawList: RawPortfolioItem[] = Array.isArray(externalJson)
-        ? externalJson
-        : externalJson.portfolio || [];
-
-      const normalized = normalizePortfolioData(rawList);
-      return NextResponse.json({
-        source: sourceParam,
-        count: normalized.length,
-        projects: normalized,
-      });
     }
 
     // If raw parameter requested, return raw portfolio array

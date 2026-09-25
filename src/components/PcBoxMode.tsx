@@ -21,6 +21,7 @@ import { GithubIcon } from './Icons';
 interface PcBoxModeProps {
   onReturnToLab: () => void;
   onInspectProject: (project: StarterProject) => void;
+  projects?: StarterProject[];
 }
 
 type WallpaperTheme = 'meadow' | 'magma' | 'ocean' | 'cyber';
@@ -28,7 +29,9 @@ type WallpaperTheme = 'meadow' | 'magma' | 'ocean' | 'cyber';
 export const PcBoxMode: React.FC<PcBoxModeProps> = ({
   onReturnToLab,
   onInspectProject,
+  projects = PC_BOX_PROJECTS,
 }) => {
+  const allProjects = projects && projects.length > 0 ? projects : PC_BOX_PROJECTS;
   const boxes = [
     { id: 'box1', name: 'BOX 1: PRODUCTION', category: 'Production' },
     { id: 'box2', name: 'BOX 2: OPEN SOURCE', category: 'Open Source' },
@@ -36,11 +39,11 @@ export const PcBoxMode: React.FC<PcBoxModeProps> = ({
   ];
 
   const [currentBoxIndex, setCurrentBoxIndex] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<StarterProject>(PC_BOX_PROJECTS[0]);
+  const [selectedProject, setSelectedProject] = useState<StarterProject>(allProjects[0]);
   const [wallpaper, setWallpaper] = useState<WallpaperTheme>('meadow');
 
   const currentBox = boxes[currentBoxIndex];
-  const filteredProjects = PC_BOX_PROJECTS.filter(
+  const filteredProjects = allProjects.filter(
     (p) => p.boxCategory === currentBox.category || currentBoxIndex === 0
   );
 
