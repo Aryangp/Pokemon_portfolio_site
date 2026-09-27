@@ -69,26 +69,26 @@ export const ChatHistoryModal: React.FC<ChatHistoryModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-xs select-none">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-xs select-none">
         {/* Modal Window Container */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ duration: 0.18 }}
-          className="w-full max-w-[800px] h-[85vh] max-h-[720px] bg-[#0F172A] border-ink-4 shadow-retro-lg flex flex-col overflow-hidden relative"
+          className="w-full max-w-[800px] h-[92vh] sm:h-[85vh] max-h-[740px] bg-[#0F172A] border-ink-4 shadow-retro-lg flex flex-col overflow-hidden relative"
         >
           {/* Top Retro Header Bar */}
-          <div className="h-12 bg-gradient-to-r from-[#FBBF24] via-[#F59E0B] to-[#D97706] border-b-2 border-[#1A202C] px-4 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 bg-[#1A202C] border border-black flex items-center justify-center shadow-retro-sm">
-                <Zap className="w-4 h-4 text-amber-400 fill-amber-400 animate-pulse" />
+          <div className="h-11 sm:h-12 bg-gradient-to-r from-[#FBBF24] via-[#F59E0B] to-[#D97706] border-b-2 border-[#1A202C] px-3 sm:px-4 flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-6 h-6 sm:w-7 sm:h-7 bg-[#1A202C] border border-black flex items-center justify-center shadow-retro-sm shrink-0">
+                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400 animate-pulse" />
               </div>
-              <div className="flex flex-col">
-                <span className="font-pixel text-[11px] md:text-xs text-[#1A202C] font-bold tracking-wider">
-                  PIKACHU AI COMMUNICATOR // POKÉNAV LINK
+              <div className="flex flex-col min-w-0">
+                <span className="font-pixel text-[10px] sm:text-xs text-[#1A202C] font-bold tracking-wider truncate">
+                  PIKACHU AI // POKÉNAV LINK
                 </span>
-                <span className="text-[8px] font-pixel text-[#451A03]">
+                <span className="text-[7.5px] sm:text-[8px] font-pixel text-[#451A03] truncate hidden sm:inline">
                   REAL-TIME GEMINI STREAMING WITH GITHUB TOOLS
                 </span>
               </div>

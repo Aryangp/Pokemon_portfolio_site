@@ -279,10 +279,10 @@ export default function Home() {
             </section>
 
             {/* MOBILE VIEWPORT (< 1024px: Responsive Vertical Flow) */}
-            <section className="flex lg:hidden flex-col items-center w-full max-w-md px-4 py-4 gap-4 pb-20 select-none">
+            <section className="flex lg:hidden flex-col items-center w-full max-w-lg px-3 sm:px-4 py-3 gap-3.5 pb-24 select-none">
               
-              {/* Mobile Lab Hero Stage */}
-              <div className="w-full border-ink-4 shadow-retro relative overflow-hidden p-4 flex items-center justify-between rounded-none">
+              {/* 1. Mobile Lab Hero Trainer Stage */}
+              <div className="w-full border-ink-4 shadow-retro relative overflow-hidden p-3.5 sm:p-4 flex items-center justify-between rounded-none">
                 <div className="absolute inset-0 z-0">
                   <Image
                     src="/images/pokemon_lab_background.jpg"
@@ -292,14 +292,20 @@ export default function Home() {
                     className="object-cover object-center"
                     priority
                   />
-                  <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
+                  <div className="absolute inset-0 bg-black/65 backdrop-blur-[1px]" />
                 </div>
 
-                <div className="relative z-10 flex flex-col text-white">
-                  <span className="font-pixel text-[11px] font-bold text-emerald-300">
+                <div className="relative z-10 flex flex-col text-white pr-2">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="font-pixel text-[8px] text-emerald-300 tracking-wider">
+                      RESEARCH LAB // ONLINE
+                    </span>
+                  </div>
+                  <span className="font-pixel text-xs sm:text-sm font-bold text-white tracking-wide">
                     {resumeData.profile.name}
                   </span>
-                  <span className="text-[9px] font-pixel text-gray-200 mt-0.5">
+                  <span className="text-[9px] font-pixel text-gray-300 mt-0.5">
                     {resumeData.profile.trainerClass}
                   </span>
                   <span className="text-[8px] font-pixel text-amber-300 mt-1">
@@ -307,12 +313,12 @@ export default function Home() {
                   </span>
                 </div>
 
-                <div className="relative z-10">
-                  <OakAvatar size={68} className="border-2 border-white shadow-retro-sm" showBadge={true} />
+                <div className="relative z-10 shrink-0">
+                  <OakAvatar size={62} className="border-2 border-white shadow-retro-sm" showBadge={true} />
                 </div>
               </div>
 
-              {/* Mobile Dialogue Box */}
+              {/* 2. Mobile Dialogue Box with Integrated Pikachu AI */}
               <div className="w-full">
                 <DialogueBox
                   dialogueText={dialogueText}
@@ -328,53 +334,80 @@ export default function Home() {
                 />
               </div>
 
-              {/* Mobile Career Expeditions Button */}
+              {/* 3. Mobile Career Expeditions Action Button */}
               <button
                 onClick={() => {
                   sound.playSelect();
                   setShowCareerModal(true);
                 }}
-                className="w-full h-11 bg-[#10B981] hover:bg-[#059669] text-white border-ink shadow-retro-sm font-pixel text-[10px] flex items-center justify-center gap-2 btn-retro cursor-pointer"
+                className="w-full h-11 bg-[#10B981] hover:bg-[#059669] text-white border-ink shadow-retro-sm font-pixel text-[9.5px] sm:text-[10px] flex items-center justify-center gap-2 btn-retro cursor-pointer"
               >
                 <Briefcase className="w-4 h-4" />
                 <span>EXPEDITIONS: POLICYBAZAAR & HISTORY</span>
               </button>
 
-              {/* Touch Starter Grid */}
-              <div className="w-full flex flex-col gap-2 mt-2">
+              {/* 4. Touch Starter Cards Grid */}
+              <div className="w-full flex flex-col gap-2 mt-1">
                 <div className="flex items-center justify-between px-1">
-                  <span className="font-pixel text-[10px] text-white">
+                  <span className="font-pixel text-[9.5px] sm:text-[10px] text-white tracking-wide">
                     STARTER POKÉBALLS:
                   </span>
-                  <span className="font-pixel text-[8px] text-emerald-400">
+                  <span className="font-pixel text-[8px] text-emerald-300 font-bold">
                     TAP TO INSPECT ({projects.length})
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  {projects.map((project) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {projects.map((project, idx) => (
                     <button
                       key={project.id}
                       onClick={() => {
                         sound.playOpen();
                         setInspectedProject(project);
                       }}
-                      className="h-[76px] bg-white border-ink shadow-retro-sm p-2 flex items-center gap-2 btn-retro text-left cursor-pointer"
+                      className="bg-white border-ink shadow-retro-sm p-2.5 flex items-center gap-3 btn-retro text-left cursor-pointer transition-all active:scale-98"
                     >
-                      <PokeBallSprite
-                        type={project.ballType}
-                        size={40}
-                        isHovered={false}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <span className="font-pixel text-[8px] text-[#059669] block truncate">
-                          {project.typeBadge}
+                      {/* Left: Sprite & Slot Badge */}
+                      <div className="flex flex-col items-center justify-center shrink-0">
+                        <PokeBallSprite
+                          type={project.ballType}
+                          size={42}
+                          isHovered={false}
+                        />
+                        <span className="font-pixel text-[7px] text-gray-400 mt-0.5">
+                          NO.0{idx + 1}
                         </span>
-                        <h4 className="font-pixel text-[9px] text-[#1A202C] font-bold truncate">
+                      </div>
+
+                      {/* Right: Content details */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-0.5">
+                          <span
+                            className={`font-pixel text-[7.5px] px-1.5 py-0.2 border ${
+                              project.typeBadge === 'Electric'
+                                ? 'bg-amber-100 text-amber-900 border-amber-400'
+                                : project.typeBadge === 'Fire'
+                                ? 'bg-red-100 text-red-900 border-red-400'
+                                : project.typeBadge === 'Water'
+                                ? 'bg-blue-100 text-blue-900 border-blue-400'
+                                : project.typeBadge === 'Psychic'
+                                ? 'bg-purple-100 text-purple-900 border-purple-400'
+                                : 'bg-emerald-100 text-emerald-900 border-emerald-400'
+                            }`}
+                          >
+                            {project.typeBadge.toUpperCase()}
+                          </span>
+                          <span className="font-pixel text-[7.5px] text-slate-500">
+                            LV.{project.level}
+                          </span>
+                        </div>
+
+                        <h4 className="font-pixel text-[9.5px] sm:text-[10px] text-[#1A202C] font-bold line-clamp-2 leading-tight">
                           {project.title}
                         </h4>
-                        <span className="font-pixel text-[7px] text-[#64748B]">
-                          LV.{project.level}
+
+                        <span className="text-[8.5px] font-dialogue text-[#64748B] block truncate mt-0.5">
+                          {project.techStack.slice(0, 3).join(', ')}
                         </span>
                       </div>
                     </button>

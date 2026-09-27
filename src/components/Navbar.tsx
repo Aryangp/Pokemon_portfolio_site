@@ -88,8 +88,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {/* Action Controls & Sound Toggle */}
-      <div className="flex items-center gap-2 md:gap-3">
-        {/* Pikachu AI Chat Quick Trigger */}
+      <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0">
+        {/* Pikachu AI Chat Quick Trigger (Desktop) */}
         {onOpenChat && (
           <button
             onClick={() => {
@@ -97,10 +97,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onOpenChat();
             }}
             title="Ask Pikachu AI"
-            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 md:py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-pixel text-[10px] md:text-[11px] font-bold border-ink shadow-retro-sm btn-retro cursor-pointer"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 md:py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-pixel text-[10px] md:text-[11px] font-bold border-ink shadow-retro-sm btn-retro cursor-pointer"
           >
             <span>⚡</span>
-            <span className="hidden sm:inline">PIKACHU AI</span>
+            <span>PIKACHU AI</span>
           </button>
         )}
 
@@ -108,18 +108,18 @@ export const Navbar: React.FC<NavbarProps> = ({
         <button
           onClick={handleToggleSound}
           title={isMuted ? 'Unmute 8-bit Audio' : 'Mute 8-bit Audio'}
-          className="w-9 h-9 md:w-10 md:h-10 bg-white border-ink flex items-center justify-center btn-retro cursor-pointer text-[#1A202C]"
+          className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white border-ink flex items-center justify-center btn-retro cursor-pointer text-[#1A202C]"
         >
           {isMuted ? (
-            <VolumeX className="w-4 h-4 text-[#EF4444]" />
+            <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#EF4444]" />
           ) : (
             <div className="flex items-center gap-0.5">
-              <Volume2 className="w-4 h-4 text-[#10B981]" />
+              <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#10B981]" />
             </div>
           )}
         </button>
 
-        {/* [EXE MODE] Switch */}
+        {/* [EXE MODE] Switch (Desktop & Tablet) */}
         <button
           onClick={() => {
             if (isExeMode) {
@@ -129,18 +129,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             }
             onToggleExeMode();
           }}
-          className={`flex items-center gap-1.5 px-2.5 md:px-3.5 py-1.5 md:py-2 text-[10px] md:text-xs font-pixel border-ink cursor-pointer transition-all ${
+          className={`hidden md:flex items-center gap-1.5 px-2.5 md:px-3.5 py-1.5 md:py-2 text-[10px] md:text-xs font-pixel border-ink cursor-pointer transition-all ${
             isExeMode
               ? 'bg-[#3B82F6] text-white shadow-retro-sm animate-pulse'
               : 'bg-[#1A202C] text-[#34D399] btn-retro'
           }`}
         >
           <Cpu className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">
+          <span>
             {isExeMode ? 'RETURN TO LAB' : '[EXE MODE: PC BOX]'}
-          </span>
-          <span className="sm:hidden">
-            {isExeMode ? 'LAB' : 'EXE'}
           </span>
         </button>
 
@@ -150,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             sound.playSelect();
             onOpenMobileDrawer();
           }}
-          className="lg:hidden flex items-center gap-1 px-2.5 py-1.5 bg-white border-ink btn-retro text-[10px] font-pixel text-[#1A202C]"
+          className="lg:hidden flex items-center gap-1 px-2.5 py-1.5 bg-white border-ink btn-retro text-[9.5px] sm:text-[10px] font-pixel text-[#1A202C] font-bold shadow-retro-sm"
         >
           <span className="text-[#EF4444]">▶</span>
           <span>START</span>
