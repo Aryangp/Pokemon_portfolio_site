@@ -15,6 +15,8 @@ export const BACKEND_BASE_URL = (
 export const API_ENDPOINTS = {
   // Projects endpoint
   projects: `${BACKEND_BASE_URL}/api/v1/projects`,
+  // AI Chatbot SSE Streaming endpoint
+  chatStream: `${BACKEND_BASE_URL}/api/v1/chat/stream`,
   // Contact endpoint
   contact: `${BACKEND_BASE_URL}/api/v1/contact`,
   // Health check endpoint

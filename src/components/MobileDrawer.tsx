@@ -12,6 +12,7 @@ interface MobileDrawerProps {
   onDownloadCv: () => void;
   isMuted: boolean;
   onToggleSound: () => void;
+  onOpenChat?: () => void;
 }
 
 export const MobileDrawer: React.FC<MobileDrawerProps> = ({
@@ -21,6 +22,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   onDownloadCv,
   isMuted,
   onToggleSound,
+  onOpenChat,
 }) => {
   if (!isOpen) return null;
 
@@ -66,8 +68,31 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
               </button>
             </div>
 
+            {/* Pikachu AI Guide Action */}
+            {onOpenChat && (
+              <button
+                onClick={() => {
+                  sound.playPikachuVoice();
+                  onClose();
+                  onOpenChat();
+                }}
+                className="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 border-ink p-3 text-left shadow-retro-sm btn-retro flex items-center justify-between cursor-pointer mt-4"
+              >
+                <div className="flex flex-col">
+                  <span className="font-pixel text-[10.5px] font-bold text-slate-950 flex items-center gap-1.5">
+                    <span>⚡</span>
+                    <span>ASK PIKACHU AI</span>
+                  </span>
+                  <span className="font-dialogue text-base text-slate-900">
+                    Live Chat & GitHub Questions
+                  </span>
+                </div>
+                <span className="font-pixel text-xs text-slate-950">▶</span>
+              </button>
+            )}
+
             {/* Menu Links */}
-            <div className="flex flex-col gap-2.5 mt-6">
+            <div className="flex flex-col gap-2.5 mt-3">
               {menuItems.map((item) => (
                 <button
                   key={item.id}

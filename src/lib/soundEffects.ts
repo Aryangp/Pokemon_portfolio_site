@@ -245,6 +245,57 @@ class SoundEngine {
       current += d * 0.9;
     });
   }
+
+  // Pikachu Electric Sparkle / Thunder Chime
+  public playPikachuThunder(): void {
+    if (this.muted) return;
+    const ctx = this.initCtx();
+    if (!ctx) return;
+
+    const freqs = [880, 1174.66, 1760, 2349.32]; // A5, D6, A6, D7
+    const now = ctx.currentTime;
+
+    freqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+
+      gain.gain.setValueAtTime(0.09, now + idx * 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + (idx + 1) * 0.06);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + idx * 0.04);
+      osc.stop(now + (idx + 1) * 0.06);
+    });
+  }
+
+  // Pikachu Cute Blip Tone
+  public playPikachuVoice(): void {
+    if (this.muted) return;
+    const ctx = this.initCtx();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(987.77, now); // B5
+    osc.frequency.exponentialRampToValueAtTime(1318.51, now + 0.08); // E6
+
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.08);
+  }
 }
 
 export const sound = new SoundEngine();

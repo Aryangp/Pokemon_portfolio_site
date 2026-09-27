@@ -10,6 +10,7 @@ interface NavbarProps {
   isExeMode: boolean;
   onToggleExeMode: () => void;
   onOpenMobileDrawer: () => void;
+  onOpenChat?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -18,6 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isExeMode,
   onToggleExeMode,
   onOpenMobileDrawer,
+  onOpenChat,
 }) => {
   const [isMuted, setIsMuted] = useState(() => (typeof window !== 'undefined' ? sound.isMuted() : false));
 
@@ -87,6 +89,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Action Controls & Sound Toggle */}
       <div className="flex items-center gap-2 md:gap-3">
+        {/* Pikachu AI Chat Quick Trigger */}
+        {onOpenChat && (
+          <button
+            onClick={() => {
+              sound.playPikachuVoice();
+              onOpenChat();
+            }}
+            title="Ask Pikachu AI"
+            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 md:py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-pixel text-[10px] md:text-[11px] font-bold border-ink shadow-retro-sm btn-retro cursor-pointer"
+          >
+            <span>⚡</span>
+            <span className="hidden sm:inline">PIKACHU AI</span>
+          </button>
+        )}
+
         {/* Audio Mute/Unmute */}
         <button
           onClick={handleToggleSound}

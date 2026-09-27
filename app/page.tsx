@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { StarterProject } from '@/data/portfolioData';
 import { useDynamicResumeData } from '@/lib/resumeService';
 import { useDynamicProjects } from '@/lib/portfolioService';
+import { useChatStream } from '@/hooks/useChatStream';
 import { sound } from '@/lib/soundEffects';
 
 // Components
@@ -22,12 +23,22 @@ import { BadgesModal } from '@/components/BadgesModal';
 import { TrainerPartyModal } from '@/components/TrainerPartyModal';
 import { CareerModal } from '@/components/CareerModal';
 import { PokeNavModal } from '@/components/PokeNavModal';
+import { ChatHistoryModal } from '@/components/ChatHistoryModal';
 import { MobileDrawer } from '@/components/MobileDrawer';
 import { Cpu, FileText, Briefcase, Sparkles } from 'lucide-react';
 
 export default function Home() {
   const { resumeData, isRemote, dataSource, reload: reloadResume } = useDynamicResumeData();
   const { projects, isLive: isProjectsLive } = useDynamicProjects();
+  const {
+    messages: chatMessages,
+    isStreaming: isChatStreaming,
+    sendMessage: sendChatMessage,
+    stopStreaming: stopChatStreaming,
+    clearChat: clearChatMessages,
+    presetPrompts,
+  } = useChatStream();
+
   const [isLoading, setIsLoading] = useState(true);
   const [isExeMode, setIsExeMode] = useState(false);
   const [activeTab, setActiveTab] = useState<'lab' | 'pcbox' | 'career' | 'badges' | 'party' | 'pokenav'>('lab');
@@ -41,6 +52,7 @@ export default function Home() {
   const [showBadgesModal, setShowBadgesModal] = useState(false);
   const [showPartyModal, setShowPartyModal] = useState(false);
   const [showPokeNavModal, setShowPokeNavModal] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [dialogueText, setDialogueText] = useState(resumeData.profile.dialogueIntro);
   const [isMuted, setIsMuted] = useState(() => (typeof window !== 'undefined' ? sound.isMuted() : false));
@@ -113,6 +125,7 @@ export default function Home() {
         isExeMode={isExeMode}
         onToggleExeMode={handleToggleExeMode}
         onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}
+        onOpenChat={() => setShowChatModal(true)}
       />
 
       {/* 3. Main Stage Content Switcher (Lab vs EXE Mode: Bill's PC) */}
@@ -247,12 +260,18 @@ export default function Home() {
 
                 </div>
 
-                {/* 4. PROFESSOR DIALOGUE BOX (Pinned Bottom) */}
-                <div className="absolute bottom-[20px] left-1/2 -translate-x-1/2 z-20 w-[920px] max-w-[95%]">
+                {/* 4. PROFESSOR / PIKACHU DIALOGUE BOX (Pinned Bottom) */}
+                <div className="absolute bottom-[16px] left-1/2 -translate-x-1/2 z-20 w-[920px] max-w-[95%]">
                   <DialogueBox
                     dialogueText={dialogueText}
                     speakerName={`PROF. ${resumeData.profile.name.split(' ')[0].toUpperCase()}`}
                     onDownloadCv={handleDownloadCv}
+                    chatMessages={chatMessages}
+                    isStreaming={isChatStreaming}
+                    onSendMessage={sendChatMessage}
+                    onStopStreaming={stopChatStreaming}
+                    onClearChat={clearChatMessages}
+                    onOpenFullLog={() => setShowChatModal(true)}
                   />
                 </div>
 
@@ -300,6 +319,12 @@ export default function Home() {
                   speakerName={`PROF. ${resumeData.profile.name.split(' ')[0].toUpperCase()}`}
                   onDownloadCv={handleDownloadCv}
                   isMobile={true}
+                  chatMessages={chatMessages}
+                  isStreaming={isChatStreaming}
+                  onSendMessage={sendChatMessage}
+                  onStopStreaming={stopChatStreaming}
+                  onClearChat={clearChatMessages}
+                  onOpenFullLog={() => setShowChatModal(true)}
                 />
               </div>
 
@@ -444,6 +469,19 @@ export default function Home() {
         onDownloadCv={handleDownloadCv}
         isMuted={isMuted}
         onToggleSound={handleToggleSound}
+        onOpenChat={() => setShowChatModal(true)}
+      />
+
+      {/* 11. Pikachu AI Chatbot Expanded Communicator Modal */}
+      <ChatHistoryModal
+        isOpen={showChatModal}
+        onClose={() => setShowChatModal(false)}
+        messages={chatMessages}
+        isStreaming={isChatStreaming}
+        onSendMessage={sendChatMessage}
+        onStopStreaming={stopChatStreaming}
+        onClearChat={clearChatMessages}
+        presetPrompts={presetPrompts}
       />
 
     </div>
