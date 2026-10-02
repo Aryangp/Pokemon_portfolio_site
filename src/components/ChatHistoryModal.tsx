@@ -199,7 +199,7 @@ export const ChatHistoryModal: React.FC<ChatHistoryModalProps> = ({
                         <div className="flex items-center gap-2 text-amber-300">
                           <span className="animate-spin text-sm">⚡</span>
                           <span className="font-pixel text-[9px]">
-                            PIKACHU IS COMMUNICATING WITH GEMINI & GITHUB...
+                            PIKACHU IS THINKING...
                           </span>
                         </div>
                       )}

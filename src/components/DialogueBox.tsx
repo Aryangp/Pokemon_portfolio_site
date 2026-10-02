@@ -257,7 +257,7 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
                   <div className="flex items-center gap-2 text-amber-600 py-1">
                     <span className="animate-spin text-sm">⚡</span>
                     <span className="font-pixel text-[8.5px] sm:text-[9.5px]">
-                      Pikachu is generating response...
+                      Pikachu is thinking...
                     </span>
                   </div>
                 ) : (
