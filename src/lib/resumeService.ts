@@ -3,8 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { DEFAULT_RESUME_DATA, FullResumeData } from '@/data/resumeData';
 
-// Public Gist or remote JSON URL override (supports both GIST_RESUME_URL and NEXT_PUBLIC_GIST_RESUME_URL, or server route /api/resume)
+// Public Gist or remote JSON URL override (supports both NEXT_PUBLIC_GIST_RESUME_URL, GIST_RESUME_URL, or server route /api/resume)
 const DEFAULT_GIST_URL =
+  process.env.NEXT_PUBLIC_GIST_RESUME_URL ||
   process.env.GIST_RESUME_URL ||
   '/api/resume';
 
@@ -18,6 +19,38 @@ export function normalizeResumeData(incoming: unknown): FullResumeData {
 
   const inc = incoming as Record<string, any>;
 
+  // Normalize technical skills flexibly
+  const languages =
+    (Array.isArray(inc.technicalSkills?.coreAndLanguages) && inc.technicalSkills.coreAndLanguages.length > 0)
+      ? inc.technicalSkills.coreAndLanguages
+      : (Array.isArray(inc.technicalSkills?.languages) && inc.technicalSkills.languages.length > 0)
+      ? inc.technicalSkills.languages
+      : DEFAULT_RESUME_DATA.technicalSkills.languages;
+
+  const databasesAndCaching =
+    Array.isArray(inc.technicalSkills?.databasesAndCaching) && inc.technicalSkills.databasesAndCaching.length > 0
+      ? inc.technicalSkills.databasesAndCaching
+      : DEFAULT_RESUME_DATA.technicalSkills.databasesAndCaching;
+
+  const combinedTools: string[] = [];
+  if (Array.isArray(inc.technicalSkills?.messagingAndDevOps)) {
+    combinedTools.push(...inc.technicalSkills.messagingAndDevOps);
+  }
+  if (Array.isArray(inc.technicalSkills?.frameworksAndLibraries)) {
+    combinedTools.push(...inc.technicalSkills.frameworksAndLibraries);
+  }
+  if (Array.isArray(inc.technicalSkills?.backendArchitecture)) {
+    combinedTools.push(...inc.technicalSkills.backendArchitecture);
+  }
+  if (Array.isArray(inc.technicalSkills?.toolsAndFrameworks)) {
+    combinedTools.push(...inc.technicalSkills.toolsAndFrameworks);
+  }
+
+  const toolsAndFrameworks =
+    combinedTools.length > 0
+      ? Array.from(new Set(combinedTools))
+      : DEFAULT_RESUME_DATA.technicalSkills.toolsAndFrameworks;
+
   return {
     profile: {
       ...DEFAULT_RESUME_DATA.profile,
@@ -28,13 +61,9 @@ export function normalizeResumeData(incoming: unknown): FullResumeData {
       },
     },
     technicalSkills: {
-      languages: inc.technicalSkills?.languages || DEFAULT_RESUME_DATA.technicalSkills.languages,
-      databasesAndCaching:
-        inc.technicalSkills?.databasesAndCaching ||
-        DEFAULT_RESUME_DATA.technicalSkills.databasesAndCaching,
-      toolsAndFrameworks:
-        inc.technicalSkills?.toolsAndFrameworks ||
-        DEFAULT_RESUME_DATA.technicalSkills.toolsAndFrameworks,
+      languages,
+      databasesAndCaching,
+      toolsAndFrameworks,
     },
     workExperience: Array.isArray(inc.workExperience) && inc.workExperience.length > 0
       ? inc.workExperience
@@ -62,12 +91,25 @@ export async function fetchResumeFromGist(customGistUrl?: string): Promise<{
   source: string;
   isRemote: boolean;
 }> {
-  const targetUrl = customGistUrl || DEFAULT_GIST_URL;
+  let targetUrl = customGistUrl || DEFAULT_GIST_URL;
+
+  // Automatically clean any commit hash from raw gist URLs
+  if (targetUrl.includes('gist.githubusercontent.com') && /\/raw\/[a-f0-9]{40}\//i.test(targetUrl)) {
+    targetUrl = targetUrl.replace(/\/raw\/[a-f0-9]{40}\//i, '/raw/');
+  }
+
+  const fetchUrl = targetUrl.includes('?')
+    ? `${targetUrl}&_t=${Date.now()}`
+    : `${targetUrl}?_t=${Date.now()}`;
 
   try {
-    const res = await fetch(targetUrl, {
+    const res = await fetch(fetchUrl, {
       cache: 'no-store',
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        Pragma: 'no-cache',
+      },
     });
 
     if (!res.ok) {
